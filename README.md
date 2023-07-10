@@ -6,6 +6,8 @@ https://anaconda.org/bioconda/fastp/badges/downloads.svg)](https://anaconda.org/
 https://badges.debian.net/badges/debian/unstable/fastp/version.svg)](https://packages.debian.org/unstable/fastp)
 [![Build Status](https://travis-ci.org/OpenGene/fastp.svg?branch=master)](https://travis-ci.org/OpenGene/fastp)
 # fastp
+> :warning: This repository is a fork of an earlier version of the original project. As of the time this note is written, the original project does not natively support the ARM64 architecture. This version seeks to provide an alternative for those who require support for ARM64. However, please be aware that this comes without the improvements and updates implemented in the original project after the time of forking.
+
 A tool designed to provide fast all-in-one preprocessing for FastQ files. This tool is developed in C++ with multithreading supported to afford high performance. 
 - [fastp](#fastp)
 - [features](#features)
