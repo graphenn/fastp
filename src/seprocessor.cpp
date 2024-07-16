@@ -326,7 +326,7 @@ void SingleEndProcessor::readerTask()
     bool splitSizeReEvaluated = false;
     Read** data = new Read*[PACK_SIZE];
     memset(data, 0, sizeof(Read*)*PACK_SIZE);
-    FastqReader reader(mOptions->in1, true, mOptions->phred64);
+    FastqReader reader(mOptions->in1, true, mOptions->phred64, mOptions->fastqBufferSize);
     reader.setReadPool(mReadPool);
     int count=0;
     bool needToBreak = false;

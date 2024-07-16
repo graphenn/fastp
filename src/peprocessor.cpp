@@ -867,7 +867,7 @@ void PairEndProcessor::interleavedReaderTask()
     Read** dataRight = new Read*[PACK_SIZE];
     memset(dataLeft, 0, sizeof(Read*)*PACK_SIZE);
     memset(dataRight, 0, sizeof(Read*)*PACK_SIZE);
-    FastqReaderPair reader(mOptions->in1, mOptions->in2, true, mOptions->phred64,true);
+    FastqReaderPair reader(mOptions->in1, mOptions->in2, true, mOptions->phred64, true, mOptions->fastqBufferSize);
     int count=0;
     bool needToBreak = false;
     while(true){

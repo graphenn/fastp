@@ -5,6 +5,8 @@
 
 #define _DEBUG false
 
+#define FQ_BUF_SIZE (1<<23)
+
 #ifndef _WIN32
 	typedef long int64;
 	typedef unsigned long uint64;

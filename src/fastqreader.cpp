@@ -27,22 +27,22 @@ SOFTWARE.
 #include <string.h>
 #include <cassert>
 
-#define FQ_BUF_SIZE (1<<23)
 #define IGZIP_IN_BUF_SIZE (1<<22)
 #define GZIP_HEADER_BYTES_REQ (1<<16)
 
-FastqReader::FastqReader(string filename, bool hasQuality, bool phred64){
+FastqReader::FastqReader(string filename, bool hasQuality, bool phred64, size_t fastqBufferSize){
 	mFilename = filename;
 	mZipped = false;
 	mFile = NULL;
 	mStdinMode = false;
-	mFastqBuf = new char[FQ_BUF_SIZE];
+	mFastqBufSize = fastqBufferSize;
+	mFastqBuf = new char[mFastqBufSize];
 	mBufDataLen = 0;
 	mBufUsedLen = 0;
 	mHasNoLineBreakAtEnd = false;
 	mGzipInputBufferSize = IGZIP_IN_BUF_SIZE;
 	mGzipInputBuffer = new unsigned char[mGzipInputBufferSize];
-	mGzipOutputBufferSize = FQ_BUF_SIZE;
+	mGzipOutputBufferSize = mFastqBufSize;
 	mGzipOutputBuffer = (unsigned char*)mFastqBuf;
 	mCounter = 0;
 	mPhred64 = phred64;
@@ -145,7 +145,7 @@ void FastqReader::readToBuf() {
 		readToBufIgzip();
 	} else {
 		if(!eof())
-			mBufDataLen = fread(mFastqBuf, 1, FQ_BUF_SIZE, mFile);
+			mBufDataLen = fread(mFastqBuf, 1, mFastqBufSize, mFile);
 	}
 	mBufUsedLen = 0;
 
@@ -400,13 +400,13 @@ FastqReaderPair::FastqReaderPair(FastqReader* left, FastqReader* right){
 	mRight = right;
 }
 
-FastqReaderPair::FastqReaderPair(string leftName, string rightName, bool hasQuality, bool phred64, bool interleaved){
+FastqReaderPair::FastqReaderPair(string leftName, string rightName, bool hasQuality, bool phred64, bool interleaved, size_t fastqBufferSize){
 	mInterleaved = interleaved;
-	mLeft = new FastqReader(leftName, hasQuality, phred64);
+	mLeft = new FastqReader(leftName, hasQuality, phred64, fastqBufferSize);
 	if(mInterleaved)
 		mRight = NULL;
 	else
-		mRight = new FastqReader(rightName, hasQuality, phred64);
+		mRight = new FastqReader(rightName, hasQuality, phred64, fastqBufferSize);
 }
 
 FastqReaderPair::~FastqReaderPair(){

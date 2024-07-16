@@ -36,7 +36,7 @@ SOFTWARE.
 
 class FastqReader{
 public:
-	FastqReader(string filename, bool hasQuality = true, bool phred64=false);
+	FastqReader(string filename, bool hasQuality = true, bool phred64=false, size_t fastqBufferSize=FQ_BUF_SIZE);
 	~FastqReader();
 	bool isZipped();
 
@@ -72,6 +72,7 @@ private:
 	size_t mGzipInputBufferSize;
 	size_t mGzipOutputBufferSize;
 	size_t mGzipInputUsedBytes;
+	size_t mFastqBufSize;
 	FILE* mFile;
 	bool mZipped;
 	char* mFastqBuf;
@@ -89,7 +90,7 @@ private:
 class FastqReaderPair{
 public:
 	FastqReaderPair(FastqReader* left, FastqReader* right);
-	FastqReaderPair(string leftName, string rightName, bool hasQuality = true, bool phred64 = false, bool interleaved = false);
+	FastqReaderPair(string leftName, string rightName, bool hasQuality = true, bool phred64 = false, bool interleaved = false, size_t fastqBufferSize=FQ_BUF_SIZE);
 	~FastqReaderPair();
 	ReadPair* read();
 public:

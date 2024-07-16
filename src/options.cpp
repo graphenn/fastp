@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string.h>
 #include "fastareader.h"
+#include "common.h"
 
 Options::Options(){
     in1 = "";
@@ -27,6 +28,7 @@ Options::Options(){
     seqLen1 = 151;
     seqLen2 = 151;
     fixMGI = false;
+    fastqBufferSize = FQ_BUF_SIZE;
     writerBufferSize = 0x01L<<22; // 4M writer buffer for per output by default
 }
 
